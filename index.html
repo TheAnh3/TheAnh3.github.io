@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulář</title>
+    <style>
+
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body class="bg-light">
+    <div class="d-flex justify-content-center m-5">
+        <div class="align-self-center bg-white shadow p-3 mb-5 rounded">
+
+            <div class="row mb-4">
+                <div class="col">
+                    <h3 class="m-2">Objednávkový formulář</h3>
+                </div>
+                <div class="col col-md-auto">
+                    <img src="logo-ucetnina1.webp" alt="Company Logo" style="max-height: 50px;" class="m-2">
+                </div>
+            </div>
+
+            <form id="myForm" action="https://hook.eu2.make.com/s35rz2nnxhj64sdmsgc3h2ooajupwh5t" method="POST" name="contact-form">
+                <div id="personal-fields">
+                    <!-- JMENO + PRIJMENI -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label for="firstname">Jméno</label>
+                                <input class="form-control" type="text" id="firstname" name="firstname" placeholder="Jméno" required>
+                            </div>
+                            <div class="col">
+                                <label for="lastname">Příjmení</label>
+                                <input class="form-control" type="text" id="lastname" name="lastname" placeholder="Příjmení" required>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- EMAIL -->
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                    </div>
+                    <!-- TEL -->
+                    <div class="form-group">
+                        <label for="tel">Telefon</label>
+                        <input type="tel" class="form-control" id="tel" name="tel" placeholder="+420 123 456 789" onkeypress="return isNumberKey2(event)" required>
+                    </div>
+                </div>
+                <!-- ICO -->
+                <div class="form-group">
+                    <label for="ico">IČO</label>
+                    <input class="form-control" type="text" id="ico" name="ico" placeholder="12345678" minlength="8" maxlength="8" onkeypress="return isNumberKey(event)" required>
+                </div>
+                <!-- SLUZBY -->
+                <div class="form-group">
+                    <label class="w-100" for="service">Služby</label>
+                    <select class="form-select p-2" id="service" name="Sluzba">
+                        <option value="Konzultaci" selected>Konzultaci</option>
+                        <option value="Vygenerování daňového domicilu">Vygenerování daňového domicilu</option>
+                        <option value="Zpracování daňového přiznání">Zpracování daňového přiznání</option>
+                    </select>
+                </div>
+                <!-- CHECKBOXY -->
+                <div class="form-group mt-4">
+                    <div class="row">
+                        <div class="col-md mt-4">
+                            <select  class="form-select p-1" id="dph" name="dph">
+                                <option value="Ne" selected>NEplátce DPH</option>
+                                <option value="Ano">Plátce DPH</option>
+                            </select>
+                        </div>
+                        <div class="col-md ml-5 mt-4">
+                            <input type="checkbox" class="form-check-input" id="fakt_visible"/>
+                            <input type="hidden" id="fakt_hidden" name="firma_faktura" value="Ne"/>
+                            <label class="form-check-label" for="exampleCheck1">Fakturu na firmu</label>
+                        </div>
+                        <div class="col-md ml-5 mt-4">
+                            <input type="checkbox" class="form-check-input" id="nakup_visible"/>
+                            <input type="hidden" id="nakup_hidden" name="Nakup v minulosti" value="Ne"/>
+                            <label class="form-check-label" for="exampleCheck1">Už jsem u Vás nakupoval služby v minulosti </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-check mt-5">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck2" required>
+                    <label class="form-check-label" for="exampleCheck2">Souhlasím s <a href="https://ucetnina1.cz/gdpr/" class="text-blue-600 hover:underline">podmínkami a zásady o zpracování osobních údajů.</a></label>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Objednávám</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const scriptURL = 'https://hook.eu2.make.com/s35rz2nnxhj64sdmsgc3h2ooajupwh5t';
+        const form = document.forms['contact-form'];
+        
+        form.addEventListener('submit', e => {
+            e.preventDefault(); // Prevent the default form submission behavior
+            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            .then(response => {
+                alert("Formulář byl úspěšně odeslán! Brzo se Vám ozveme");
+                window.location.reload(); // Reload the page after alert
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('Nastala nějaká chyba při odeslání formuláře.');
+            });
+        });
+
+        const termsCheckbox = document.getElementById('fakt_visible');
+        const termsHidden = document.getElementById('fakt_hidden');
+
+        termsCheckbox.addEventListener('change', function() {
+            if (termsCheckbox.checked) {
+            termsHidden.value = 'Ano'; // If checked, set value to "yes"
+            } else {
+            termsHidden.value = 'Ne';  // If not checked, set value to "no"
+            }
+        });
+
+        function toggleFields() {
+            const nakupCheckbox = document.getElementById('nakup_visible');
+            const personalFields = document.getElementById('personal-fields');
+
+            if (nakupCheckbox.checked) {
+                personalFields.style.display = 'none';  // Hide personal fields
+            } else {
+                personalFields.style.display = 'block'; // Show personal fields
+            }
+        }
+
+        // Event listener to trigger when checkbox is clicked
+        document.addEventListener('DOMContentLoaded', function() {
+            const nakupCheckbox = document.getElementById('nakup_visible');
+            nakupCheckbox.addEventListener('change', toggleFields);  // Add event listener to checkbox change
+        });
+
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
+        }
+        
+        function isNumberKey2(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 43 && charCode != 32)
+                return false;
+            return true;
+        }
+    </script>
+</body>
+</html>
