@@ -23,6 +23,10 @@
             background-color: #66649c;
             border-color: #66649c;
         }
+        .btn-primary:focus,
+        .btn-primary.focus {
+            box-shadow: 0 0 0 .2rem rgba(102, 100, 156, 0.6);
+        }
         .btn-primary:not(:disabled):not(.disabled):active,
         .btn-primary:not(:disabled):not(.disabled).active,
         .show>.btn-primary.dropdown-toggle {
@@ -169,7 +173,7 @@
             fetch(scriptURL, { method: 'POST', body: new FormData(form) })
             .then(response => {
                 alert("Formulář byl úspěšně odeslán! Brzo se Vám ozveme");
-                window.location.reload(); // Reload the page after alert
+                // window.location.reload(); // Reload the page after alert
             })
             .catch(error => {
                 console.error('Error!', error.message);
@@ -182,9 +186,9 @@
 
         termsCheckbox.addEventListener('change', function() {
             if (termsCheckbox.checked) {
-                termsHidden.value = 'Ano'; // If checked, set value to "yes"
+                termsHidden.value = 'Ano';
             } else {
-                termsHidden.value = 'Ne';  // If not checked, set value to "no"
+                termsHidden.value = 'Ne';
             }
         });
 
@@ -209,15 +213,66 @@
                 });
             }
         }
-
-        // Event listener to trigger when checkbox is clicked
         document.addEventListener('DOMContentLoaded', function() {
             const nakupCheckbox = document.getElementById('nakup_visible');
-            nakupCheckbox.addEventListener('change', toggleFields);  // Add event listener to checkbox change
+            nakupCheckbox.addEventListener('change', toggleFields);
+            document.getElementById('tel').addEventListener('input', function(e) {
+                let input = e.target.value;
+
+    // Check if the input starts with a "+"
+    let isInternational = false;
+    if (input.startsWith('+')) {
+        isInternational = true;
+        // Remove the "+" temporarily for formatting the digits
+        input = input.substring(1);
+    }
+
+    // Remove any non-digit characters (ignores the "+" if present)
+    input = input.replace(/\D/g, '');
+
+    if(isInternational && input.length > 12){
+        input = input.substring(0,12);
+    }else if(!isInternational && input.length > 9){
+        input = input.substring(0,9);
+    }
+
+    // Format the input as 123 456 7890 (or with international codes if needed)
+    if(isInternational && input.length > 9){
+        input = input.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, '$1 $2 $3 $4');
+    }
+    if (input.length > 6) {
+        input = input.replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3');
+    } else if (input.length > 3) {
+        input = input.replace(/(\d{3})(\d+)/, '$1 $2');
+    }
+
+    // Add back the "+" if it was there
+    if (isInternational) {
+        input = '+' + input;
+    }
+
+    // Set the formatted value back to the input field
+    e.target.value = input;
+});
+        //         let input = e.target.value;
+
+        //         // Remove any non-digit characters (like spaces) from the input
+        //         input = input.replace(/\D/g, '');
+
+        //         // Format the input with spaces: 123 456 7890
+        //         if (input.length > 6) {
+        //             input = input.replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3');
+        //         } else if (input.length > 3) {
+        //             input = input.replace(/(\d{3})(\d+)/, '$1 $2');
+        //         }
+
+        //         // Set the formatted value back to the input field
+        //         e.target.value = input;
+        //     });
         });
 
-        function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode
+        function isNumberKey(evt) { //TODO: Check on mobile
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
             if (charCode > 31 && (charCode < 48 || charCode > 57))
                 return false;
             return true;
