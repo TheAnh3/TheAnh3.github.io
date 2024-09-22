@@ -106,12 +106,12 @@
                     <!-- TEL -->
                     <div class="form-group">
                         <label for="tel">Telefon</label>
-                        <input type="tel" class="form-control" id="tel" name="tel" placeholder="+420 123 456 789" onkeypress="return isNumberKey2(event)" required>
+                        <input type="tel" class="form-control" id="tel" name="tel" placeholder="+420 123 456 789" required>
                     </div>
                     <!-- ICO -->
                     <div class="form-group">
                         <label for="ico">IČO</label>
-                        <input class="form-control" type="text" id="ico" name="ico" placeholder="12345678" minlength="8" maxlength="8" onkeypress="return isNumberKey(event)" required>
+                        <input class="form-control" type="text" id="ico" name="ico" placeholder="12345678" minlength="8" maxlength="8" required>
                     </div>
                 </div>
                 <!-- EMAIL -->
@@ -122,11 +122,10 @@
                 <!-- SLUZBY -->
                 <div class="form-group">
                     <label class="w-100" for="service">Služby</label>
-                    <select class="form-select p-2" id="service" name="Sluzba">
-                        <option value="Konzultaci" selected>Konzultaci</option>
-                        <option value="Vygenerování daňového domicilu">Vygenerování daňového domicilu</option>
-                        <option value="Zpracování daňového přiznání">Zpracování daňového přiznání</option>
+                    <select class="form-select p-2" id="service" name="Sluzba" required>
+                        <option value="" selected disabled>Loading</option>
                     </select>
+                    <input type="hidden" id="service_id" name="service_id" value=""/>
                 </div>
                 <!-- CHECKBOXY -->
                 <div class="form-check mt-4">
@@ -163,8 +162,8 @@
             </form>
         </div>
     </div>
-
     <script>
+        const API_KEY = 'eu1-4e52-373f-41ce-871a-9889783fc6e8';
         const scriptURL = 'https://hook.eu2.make.com/s35rz2nnxhj64sdmsgc3h2ooajupwh5t';
         const form = document.forms['contact-form'];
         
@@ -216,59 +215,87 @@
         document.addEventListener('DOMContentLoaded', function() {
             const nakupCheckbox = document.getElementById('nakup_visible');
             nakupCheckbox.addEventListener('change', toggleFields);
+            document.getElementById('ico').addEventListener('input',(e)=>{
+                var input = e.target.value;
+                input = input.replace(/\D/g, '');
+                e.target.value = input;
+            });
+
             document.getElementById('tel').addEventListener('input', function(e) {
                 let input = e.target.value;
+            let isInternational = false;
+            if (input.startsWith('+')) {
+                isInternational = true;
+                input = input.substring(1);
+            }
+            input = input.replace(/\D/g, '');
 
-    // Check if the input starts with a "+"
-    let isInternational = false;
-    if (input.startsWith('+')) {
-        isInternational = true;
-        // Remove the "+" temporarily for formatting the digits
-        input = input.substring(1);
-    }
-
-    // Remove any non-digit characters (ignores the "+" if present)
-    input = input.replace(/\D/g, '');
-
-    if(isInternational && input.length > 12){
-        input = input.substring(0,12);
-    }else if(!isInternational && input.length > 9){
-        input = input.substring(0,9);
-    }
-
-    // Format the input as 123 456 7890 (or with international codes if needed)
-    if(isInternational && input.length > 9){
-        input = input.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, '$1 $2 $3 $4');
-    }
-    if (input.length > 6) {
-        input = input.replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3');
-    } else if (input.length > 3) {
-        input = input.replace(/(\d{3})(\d+)/, '$1 $2');
-    }
-
-    // Add back the "+" if it was there
-    if (isInternational) {
-        input = '+' + input;
-    }
-
-    // Set the formatted value back to the input field
-    e.target.value = input;
-});
-
+            if(isInternational && input.length > 12){
+                input = input.substring(0,12);
+            }else if(!isInternational && input.length > 9){
+                input = input.substring(0,9);
+            }
+            if(isInternational && input.length > 9){
+                input = input.replace(/(\d{3})(\d{3})(\d{3})(\d+)/, '$1 $2 $3 $4');
+            }
+            if (input.length > 6) {
+                input = input.replace(/(\d{3})(\d{3})(\d+)/, '$1 $2 $3');
+            } else if (input.length > 3) {
+                input = input.replace(/(\d{3})(\d+)/, '$1 $2');
+            }
+            if (isInternational) {
+                input = '+' + input;
+            }
+            e.target.value = input;
         });
 
-        function isNumberKey(evt) { //TODO: Check on mobile
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57))
-                return false;
-            return true;
-        }
-        
-        function isNumberKey2(evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode
-            if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 43 && charCode != 32)
-                return false;
-            return true;
+        // Fetch Products
+            
+            // products(API_KEY);
+
+            var arr = [
+                {name:"Konzultaci", id:5544883424},
+                {name:"Vygenerování daňového domicilu", id:6622014193},
+                {name:"Zpracování daňového přiznání", id:6622014194}
+            ]
+            var service = document.getElementById('service');
+            service.textContent = '';
+            arr.forEach((val)=>{
+                var opt = document.createElement('option');
+                opt.text = val.name;
+                opt.value = val.id;
+                service.appendChild(opt);
+            });
+            service.firstChild.setAttribute('selected',true);
+            document.getElementById('service_id').value = service.firstChild.value;
+
+            service.addEventListener('change',(e)=>{
+                document.getElementById('service_id').value = e.target.value;
+            });
+        });
+
+
+        async function products(API_KEY) {
+            const url = `https://api.hubapi.com/crm/v3/objects/products?hapikey=${API_KEY}`;
+            try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Error fetching products: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            console.log(data.results);
+
+            return data.results;  // HubSpot stores the products in `results` array
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     </script>
 </body>
