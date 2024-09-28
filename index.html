@@ -91,6 +91,27 @@
             margin-bottom: 1rem;
             transition: all 0.3s ease;
         }
+
+        .custom-switch.custom-switch .custom-control-label {
+            padding-left: 2rem;
+            padding-bottom: 1.25rem;
+        }
+
+        .custom-switch.custom-switch .custom-control-label::before {
+            height: 1.25rem;
+            width: calc(1.75rem + 0.75rem);
+            border-radius: 3rem;
+        }
+
+        .custom-switch.custom-switch .custom-control-label::after {
+            width: calc(1.25rem - 4px);
+            height: calc(1.25rem - 4px);
+            border-radius: calc(2rem - (1.25rem / 2));
+        }
+
+        .custom-switch.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+            transform: translateX(calc(1.5rem - 0.25rem));
+        }
     </style>
 </head>
 <body class="bg-light">
