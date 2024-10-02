@@ -172,6 +172,7 @@
                         <option value="" selected disabled>Loading</option>
                     </select>
                     <input type="hidden" id="service_id" name="sluzba_id" value=""/>
+                    <input type="hidden" id="service_price" name="sluzba_cena" value=""/>
                 </div>
                 <!-- CHECKBOXY -->
                 <div class="form-check mt-4">
@@ -297,6 +298,10 @@
             arr.set("Konzultaci",5544883424);
             arr.set("Vygenerování daňového domicilu",6622014193);
             arr.set("Zpracování daňového přiznání",6622014194);
+            var arr2 = new Map();
+            arr2.set("Konzultaci","500 Kc");
+            arr2.set("Vygenerování daňového domicilu","5000 Kc");
+            arr2.set("Zpracování daňového přiznání","2000 Kc");
             //var arr = products();
             var service = document.getElementById('service');
             service.textContent = '';
@@ -310,8 +315,10 @@
 
             service.firstChild.setAttribute('selected',true);
             document.getElementById('service_id').value = arr.get(service.firstChild.value);
+            document.getElementById('service_price').value = arr2.get(service.firstChild.value)
             service.addEventListener('change',(e)=>{
                 document.getElementById('service_id').value = arr.get(e.target.value);
+                document.getElementById('service_price').value = arr2.get(e.target.value)
             });
         });
     </script>
