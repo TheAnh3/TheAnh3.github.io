@@ -203,7 +203,8 @@
         </div>
     </div>
     <script>
-        const scriptURL = 'https://hook.eu2.make.com/s35rz2nnxhj64sdmsgc3h2ooajupwh5t';
+        // const scriptURL = 'https://hook.eu2.make.com/s35rz2nnxhj64sdmsgc3h2ooajupwh5t';
+        const scriptURL = 'https://hook.eu2.make.com/mx2b6cjqonlrtel40tx9n6g831akulew';
         const form = document.forms['contact-form'];
         
         form.addEventListener('submit', e => {
@@ -212,8 +213,7 @@
             .then(response => {
                 alert("Formulář byl úspěšně odeslán! Brzo se Vám ozveme");
                 // window.location.reload(); // Reload the page after alert
-            })
-            .catch(error => {
+            }).catch(error => {
                 console.error('Error!', error.message);
                 alert('Nastala nějaká chyba při odeslání formuláře.');
             });
@@ -299,9 +299,9 @@
             arr.set("Vygenerování daňového domicilu",6622014193);
             arr.set("Zpracování daňového přiznání",6622014194);
             var arr2 = new Map();
-            arr2.set("Konzultaci","500 Kc");
-            arr2.set("Vygenerování daňového domicilu","5000 Kc");
-            arr2.set("Zpracování daňového přiznání","2000 Kc");
+            arr2.set("Konzultaci",30);
+            arr2.set("Vygenerování daňového domicilu",40);
+            arr2.set("Zpracování daňového přiznání",50);
             //var arr = products();
             var service = document.getElementById('service');
             service.textContent = '';
@@ -324,3 +324,9 @@
     </script>
 </body>
 </html>
+
+
+<!-- //TODO: 
+Hide platce/neplatce
+Faktura na Firmu -> firma ico, firma email
+Ares nebo pridat ICO na firma -->
