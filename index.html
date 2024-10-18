@@ -271,6 +271,7 @@
             const company_check = document.getElementById('fakt_visible');
             var company_fields_height = company_fields.offsetHeight;
             var comp_vars = ['company_email','company_name','company_address'];
+
             // HIDDING
             nakupCheckbox.addEventListener('change', ()=>{
                 var fields = ['firstname','lastname','ico','tel'];
@@ -403,8 +404,8 @@
                 //     document.getElementById('email_label').innerHTML = "Email";
                 // }
             });
-            document.getElementById('company_send_check').addEventListener('change',(e)=>{
-                if(e.checked){
+            document.getElementById('company_send_check').addEventListener('change',()=>{
+                if(document.getElementById('company_send_check').checked){
                     document.getElementById('company_send_mail').value = 'True';
                 }else{
                     document.getElementById('company_send_mail').value = 'False';
