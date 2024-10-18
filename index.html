@@ -299,13 +299,13 @@
                     });
                     document.getElementById('company_send_mail').value = '';
                     document.getElementById('company_send_check').checked = false;
-                    if(company_check.checked){
-                        document.getElementById('email').setAttribute('name','company_email');
-                        document.getElementById('email_label').innerHTML = "Firemní email";
-                    }else{
-                        document.getElementById('email').setAttribute('name','email');
-                        document.getElementById('email_label').innerHTML = "Email";
-                    }
+                    // if(company_check.checked){
+                    //     document.getElementById('email').setAttribute('name','company_email');
+                    //     document.getElementById('email_label').innerHTML = "Firemní email";
+                    // }else{
+                    //     document.getElementById('email').setAttribute('name','email');
+                    //     document.getElementById('email_label').innerHTML = "Email";
+                    // }
                 } else {
                     personalFields.style.opacity = 1;
                     personalFields.style.visibility = 'visible';
@@ -330,8 +330,8 @@
                         document.getElementById('company_send_check').checked = false;
                         document.getElementById('ico').setAttribute('name','company_ico');
                         document.getElementById('ico_label').innerHTML = "Firemní IČO";
-                        document.getElementById('email').setAttribute('name','email');
-                        document.getElementById('email_label').innerHTML = "Email";
+                        // document.getElementById('email').setAttribute('name','email');
+                        // document.getElementById('email_label').innerHTML = "Email";
                     }else{
                         company_fields.style.opacity = 0;
                         company_fields.style.visibility = 'hidden';
@@ -395,13 +395,13 @@
                     document.getElementById('ico_label').innerHTML = "IČO";
                 }
 
-                if(company_check.checked && nakupCheckbox.checked){
-                    document.getElementById('email').setAttribute('name','company_email');
-                    document.getElementById('email_label').innerHTML = "Firemní email";
-                }else{
-                    document.getElementById('email').setAttribute('name','email');
-                    document.getElementById('email_label').innerHTML = "Email";
-                }
+                // if(company_check.checked && nakupCheckbox.checked){
+                //     document.getElementById('email').setAttribute('name','company_email');
+                //     document.getElementById('email_label').innerHTML = "Firemní email";
+                // }else{
+                //     document.getElementById('email').setAttribute('name','email');
+                //     document.getElementById('email_label').innerHTML = "Email";
+                // }
             });
             document.getElementById('company_send_check').addEventListener('change',(e)=>{
                 if(e.checked){
