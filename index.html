@@ -120,6 +120,14 @@
         #company_fields {
             transition: all 0.3s ease;
         }
+        #magic{
+            margin-top: 2rem;
+        }
+        @media screen and (max-width: 500px){
+            #magic{
+                margin-top: 0rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -144,6 +152,11 @@
                         <input type="hidden" id="nakup_hidden" name="Nakup v minulosti" value="Ne"/>
                     </div>
                 </div>
+                <div class="custom-control custom-checkbox mb-4">
+                    <input type="checkbox" class="custom-control-input" id="fakt_visible" />
+                    <label class="custom-control-label" for="fakt_visible"><b>Fakturu na firmu</b><br/><i> Zaškrtnete políčko pokud objednáváte na Firmu</i></label>
+                </div>
+                <input type="hidden" id="fakt_hidden" name="firma_faktura" value="Ne"/>
                 <div id="personal-fields">
                     <!-- JMENO + PRIJMENI -->
                     <div class="form-group">
@@ -165,7 +178,7 @@
                     </div>
                     <!-- ICO -->
                     <div class="form-group" id="ico_row">
-                        <label for="ico" id="ico_label">IČO</label>
+                        <label for="ico" id="ico_label">OSVČ IČO</label>
                         <input class="form-control" type="text" id="ico" name="ico" placeholder="12345678" minlength="8" maxlength="8" required>
                     </div>
                 </div>
@@ -205,30 +218,40 @@
                     </div> -->
                 </div>
                 <!-- SLUZBY -->
-                <div class="form-group mt-3">
-                    <label class="w-100" for="service">Služby</label>
-                    <select class="form-select p-2" id="service" name="sluzba" required>
-                        <option value="" selected disabled>Loading</option>
-                    </select>
-                    <input type="hidden" id="service_price" name="sluzba_cena" value=""/>
+                 <div class="row mt-3">
+                    <div class="col-auto">
+                        <div class="form-group">
+                            <label class="w-100" for="service">Služby</label>
+                            <select class="form-select p-2" id="service" name="sluzba" required>
+                                <option value="" selected disabled>Loading</option>
+                            </select>
+                            <input type="hidden" id="service_price" name="sluzba_cena" value=""/>
+                        </div>    
+                    </div>
+                    <div id="magic" class="col-auto">
+                        <select  class="form-select p-2 " id="dph" name="dph">
+                            <option value="Ne" selected>NEplátce DPH</option>
+                            <option value="Ano">Plátce DPH</option>
+                        </select>
+                    </div>
                 </div>
                 <!-- CHECKBOXY -->
                 <div class="form-check mt-4">
-                    <div class="row">
-                        <div class="col-md mt-4">
-                            <div class="custom-control custom-checkbox">
+                    <!-- <div class="row"> -->
+                        <!-- <div class="col-md mt-4"> -->
+                            <!-- <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="fakt_visible" />
-                                <label class="custom-control-label" for="fakt_visible">Fakturu na firmu</label>
+                                <label class="custom-control-label" for="fakt_visible">Fakturu na firmu<br/><br/><i>Zaškrtnete políčko pokud objednáváte na Firmu</i></label>
                             </div>
-                            <input type="hidden" id="fakt_hidden" name="firma_faktura" value="Ne"/>
-                        </div>
-                        <div class="col-md ml-3 mt-4">
-                            <select  class="form-select p-1" id="dph" name="dph">
+                            <input type="hidden" id="fakt_hidden" name="firma_faktura" value="Ne"/> -->
+                        <!-- </div> -->
+                        <!-- <div class="col-md ml-3 mt-4"> -->
+                            <!-- <select  class="form-select p-1 mt-4" id="dph" name="dph">
                                 <option value="Ne" selected>NEplátce DPH</option>
                                 <option value="Ano">Plátce DPH</option>
-                            </select>
-                        </div>
-                    </div>
+                            </select> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
                 </div>
                 <!-- SUBMIT + SOUHLAS -->
                 <div class="form-check mt-5">
@@ -243,12 +266,14 @@
     </div>
     <script>
         const scriptURL = 'https://hook.eu2.make.com/s35rz2nnxhj64sdmsgc3h2ooajupwh5t';
+        const dphUrl = 'https://hook.eu2.make.com/a3l9io33qdimu6s6x9px5f1wz1crkr5h';
         // const scriptURL = 'https://hook.eu2.make.com/mx2b6cjqonlrtel40tx9n6g831akulew';
         const form = document.forms['contact-form'];
         
         form.addEventListener('submit', e => {
             e.preventDefault();
-            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            var url = (document.getElementById('dph').value == "Ano") ? dphUrl : scriptURL;
+            fetch(url, { method: 'POST', body: new FormData(form) })
             .then(response => {
                 alert("Formulář byl úspěšně odeslán! Brzo se Vám ozveme");
                 // window.location.reload(); // Reload the page after alert
@@ -346,7 +371,7 @@
                         document.getElementById('company_send_mail').value = '';
                         document.getElementById('company_send_check').checked = false;
                         document.getElementById('ico').setAttribute('name','ico');
-                        document.getElementById('ico_label').innerHTML = "IČO";
+                        document.getElementById('ico_label').innerHTML = "OSVČ IČO";
                     }
                 }
             });
@@ -393,7 +418,7 @@
                     document.getElementById('company_send_mail').value = '';
                     document.getElementById('company_send_check').checked = false;
                     document.getElementById('ico').setAttribute('name','ico');
-                    document.getElementById('ico_label').innerHTML = "IČO";
+                    document.getElementById('ico_label').innerHTML = "OSVČ IČO";
                 }
 
                 // if(company_check.checked && nakupCheckbox.checked){
