@@ -189,19 +189,19 @@
                 </div>
                 <div id="company_fields" class="mt-4">
                     <!-- COMP. NAME -->
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="company_name">Název firmy</label>
                         <input class="form-control" type="text" id="company_name" name="company_name" placeholder="Example Inc." required>
-                    </div>
+                    </div> -->
                     <!-- COMP. Address -->
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="company_address">Adresa firmy</label>
                         <input class="form-control" type="text" id="company_address" name="company_address" placeholder="Ulice 64/7, 120 00 Město" required>
-                    </div>
+                    </div> -->
                     <!-- COMP. EMAIL -->
                     <div class="form-group">
                         <label for="company_email">Firemní Email</label>
-                        <input type="email" class="form-control" id="company_email" name="company_email" placeholder="firma@example.com" required>
+                        <input type="email" class="form-control" id="company_email" name="company_email" placeholder="firma@example.com">
                     </div>
                     <!-- SEND TO COMP. -->
                     <div class="form-check">
@@ -295,7 +295,8 @@
             const company_fields = document.getElementById('company_fields');
             const company_check = document.getElementById('fakt_visible');
             var company_fields_height = company_fields.offsetHeight;
-            var comp_vars = ['company_email','company_name','company_address'];
+            // var comp_vars = ['company_email','company_name','company_address'];
+            var comp_vars = ['company_email']
 
             // HIDDING
             nakupCheckbox.addEventListener('change', ()=>{
@@ -473,7 +474,7 @@
 
         // TODO: PRODUCTS !!!!!!!!!!!!!!!!
             var arr = new Map();
-            arr.set("Konzultace",30);
+            arr.set("Konzultaci",30);
             arr.set("Vygenerování daňového domicilu",40);
             arr.set("Zpracování daňového přiznání",50);
             // HERE: !!!!!!!!!!!!!!!!!!!!!!!!!!!
