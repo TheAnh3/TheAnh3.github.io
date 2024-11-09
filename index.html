@@ -123,6 +123,13 @@
         #magic{
             margin-top: 2rem;
         }
+        #price{
+            font-size: 1.5rem;
+            color: #66649c;
+            font-size: 1.5rem;
+            font-weight: 600;
+            /* text-decoration: underline; */
+        }
         @media screen and (max-width: 500px){
             #magic{
                 margin-top: 0rem;
@@ -260,7 +267,14 @@
                         <label class="custom-control-label" for="exampleCheck2">Souhlasím s <a href="https://ucetnina1.cz/gdpr/" class="text-blue-600 hover:underline">podmínkami a zásady o zpracování osobních údajů.</a></label>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3">Objednávám</button>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary mt-3">Objednávám</button>
+                    </div>
+                    <div class="col-auto">
+                        <p class="m-3" id="price"></p>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -296,6 +310,9 @@
                 alert('Nastala nějaká chyba při odeslání formuláře.');
             });
         });
+        window.addEventListener('resize',(e)=>{
+            window.location.reload();
+        })
 
         const termsHidden = document.getElementById('fakt_hidden');
 
@@ -498,8 +515,10 @@
 
             service.firstChild.setAttribute('selected',true);
             document.getElementById('service_price').value = PRODUCTS.get(service.firstChild.value)
+            document.getElementById('price').innerHTML = PRODUCTS.get(service.firstChild.value) +" Kč";
             service.addEventListener('change',(e)=>{
                 document.getElementById('service_price').value = PRODUCTS.get(e.target.value)
+                document.getElementById('price').innerHTML = PRODUCTS.get(e.target.value) +" Kč";
             });
         });
     </script>
